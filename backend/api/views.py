@@ -31,3 +31,18 @@ from api import models as api_models
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = api_serializer.MyTokenObtainPairSerializer
+    
+class RegisterView(generics.CreateAPIView):
+    queryset = api_models.User.objects.all()
+    permission_classes = [AllowAny]
+    serializer_class = api_serializer.RegisterSerializer
+    
+class ProfileView(generics.RetrieveUpdateAPIView):
+    permission_classes = [AllowAny]
+    serializer_class = api_serializer.ProfileSerializer
+    
+    def get_object(self):
+        user_id = self.kwargs['user_id']
+        user = api_models.User.objects.get(id = user_id)
+        profile = api_models.Profile.objects.get(user=user)
+        return profile

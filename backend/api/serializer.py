@@ -10,9 +10,11 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token = super().get_token(user)
         
         token['full_name'] = user.full_name
+        token['email'] = user.email
+        token['username'] = user.username
         return token
 
-class RegisterSerializer(serializers.Serializer):
+class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
     password2= serializers.CharField(write_only=True, required=True)
     
@@ -32,7 +34,7 @@ class RegisterSerializer(serializers.Serializer):
         email_username, mobile = user.email.split("@")
         user.username = email_username
         
-        user.set_password(validate_password['password'])
+        user.set_password(validated_data['password'])
         user.save()
         return user
     
