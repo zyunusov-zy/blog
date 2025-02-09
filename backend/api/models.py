@@ -70,8 +70,8 @@ class Category(models.Model):
     def __str__(self):
         return self.title
     
-    # class Meta:
-        # verbose_name_plural = "Category"
+    class Meta:
+        verbose_name_plural = "Categories"
     
     def save(self, *args, **kwargs):
         if self.slug == "" or self.slug == None:
@@ -79,7 +79,7 @@ class Category(models.Model):
             
             super(Category, self).save(*args, **kwargs)
 
-    def count_post(self):
+    def post_count(self):
         return Post.objects.filter(category=self).count()
     
 class Post(models.Model):
@@ -109,7 +109,7 @@ class Post(models.Model):
     
     class Meta:
         ordering = ["-date"]
-        verbose_name_plural = "Post"
+        verbose_name_plural = "Posts"
     
     def save(self, *args, **kwargs):
         if self.slug == "" or self.slug == None:
@@ -131,7 +131,7 @@ class Comment(models.Model):
     
     class Meta:
         ordering = ["-date"]
-        verbose_name_plural = "Comment"
+        verbose_name_plural = "Comments"
         
 class Bookmark(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -143,7 +143,7 @@ class Bookmark(models.Model):
     
     class Meta:
         ordering = ["-date"]
-        verbose_name_plural = "Bookmark"
+        verbose_name_plural = "Bookmarks"
         
 class Notification(models.Model):
     NOTI_TYPE = (
@@ -165,4 +165,4 @@ class Notification(models.Model):
     
     class Meta:
         ordering = ["-date"]
-        verbose_name_plural = "Notification"
+        verbose_name_plural = "Notifications"

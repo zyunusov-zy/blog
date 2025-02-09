@@ -7,4 +7,9 @@ urlpatterns = [
     path('user/token/refresh/', TokenRefreshView.as_view()),
     path('user/register/', api_views.RegisterView.as_view()),
     path('user/profile/<user_id>/', api_views.ProfileView.as_view()),
+    
+    # Post End Points
+    path('post/category/list/', api_views.CategoryListAPIView.as_view()),
+    path('post/category/posts/<category_slug>/', api_views.PostCategoryListAPIView.as_view()),
+
 ]
