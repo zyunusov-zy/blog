@@ -13,4 +13,11 @@ urlpatterns = [
     path('post/category/posts/<category_slug>/', api_views.PostCategoryListAPIView.as_view()),
     path('post/lists/', api_views.PostListsAPIView.as_view()),
     path('post/detail/<slug>/', api_views.PostDetailAPIView.as_view()),
+
+    # Like
+    path('post/like-post/', api_views.LikePostAPIVIew.as_view()),
+    # Comment
+    path('post/comment-post/', api_views.CommentPostAPIView.as_view()),
+    path('post/bookmark-post/', api_views.BookmarkPostAPIView.as_view()),
+
 ]
