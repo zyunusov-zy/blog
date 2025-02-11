@@ -97,12 +97,12 @@ class Post(models.Model):
     status = models.CharField(choices=STATUS, max_length=100, default="Active")
     title = models.CharField(max_length=100)
     description = models.TextField(null=True, blank=True)
+    tags = models.CharField(max_length=100)
     image = models.FileField(upload_to="image", null=True, blank=True)
     view = models.IntegerField(default=0)
     like = models.ManyToManyField(User, blank=True, related_name="likes_user")
     slug = models.SlugField(unique=True, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True)
-    
     
     def __str__(self):
         return self.title
@@ -114,8 +114,7 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         if self.slug == "" or self.slug == None:
             self.slug = slugify(self.title) + "-" + shortuuid.uuid()[:2]
-            
-            super(Post, self).save(*args, **kwargs)
+        super(Post, self).save(*args, **kwargs)
             
             
 class Comment(models.Model):

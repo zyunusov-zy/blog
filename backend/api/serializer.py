@@ -67,7 +67,7 @@ class CommentSerializer(serializers.ModelSerializer):
         if request and request.method == "POST":
             self.Meta.depth = 0
         else:
-            self.Meta.depth = 1
+            self.Meta.depth = 3
             
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
@@ -80,7 +80,7 @@ class PostSerializer(serializers.ModelSerializer):
         if request and request.method == "POST":
             self.Meta.depth = 0
         else:
-            self.Meta.depth = 1
+            self.Meta.depth = 3
             
 class BookmarkSerializer(serializers.ModelSerializer):
     class Meta:
@@ -93,7 +93,7 @@ class BookmarkSerializer(serializers.ModelSerializer):
         if request and request.method == "POST":
             self.Meta.depth = 0
         else:
-            self.Meta.depth = 1
+            self.Meta.depth = 3
             
 class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -106,7 +106,7 @@ class NotificationSerializer(serializers.ModelSerializer):
         if request and request.method == "POST":
             self.Meta.depth = 0
         else:
-            self.Meta.depth = 1
+            self.Meta.depth = 3
             
 class AuthorSerializer(serializers.Serializer):
     views = serializers.IntegerField(default=0)
