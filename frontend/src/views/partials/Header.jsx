@@ -1,108 +1,85 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { BiSearch, BiUserPlus, BiLogIn, BiMenu } from "react-icons/bi";
+import { FaUser, FaPlusCircle, FaBell, FaComment, FaGripLines } from "react-icons/fa";
 
-function Header() {
-    return (
-        <header className="navbar-dark bg-dark navbar-sticky header-static">
-            <nav className="navbar navbar-expand-lg">
-                <div className="container">
-                    <Link className="navbar-brand" to="/">
-                        <img className="navbar-brand-item dark-mode-item" src="https://i.postimg.cc/ZRNC1mhM/my-main-logo.png" style={{ width: "200px" }} alt="logo" />
-                    </Link>
-                    <button className="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="h6 d-none d-sm-inline-block text-white">Menu</span>
-                        <span className="navbar-toggler-icon" />
-                    </button>
-                    <div className="collapse navbar-collapse" id="navbarCollapse">
-                        <div className="nav mt-3 mt-lg-0 px-4 flex-nowrap align-items-center">
-                            <div className="nav-item w-100">
-                                <form className="rounded position-relative">
-                                    <input className="form-control pe-5 bg-light" type="search" placeholder="Search Articles" aria-label="Search" />
-                                    <Link to={"/search/"} className="btn bg-transparent border-0 px-2 py-0 position-absolute top-50 end-0 translate-middle-y" type="submit">
-                                        <i className="bi bi-search fs-5"> </i>
-                                    </Link>
-                                </form>
-                            </div>
-                        </div>
-                        <ul className="navbar-nav navbar-nav-scroll ms-auto">
-                            <li className="nav-item dropdown">
-                                <Link className="nav-link active" to="/">
-                                    Home
-                                </Link>
-                            </li>
-                            <li className="nav-item dropdown">
-                                <Link className="nav-link active" to="/category/">
-                                    Category
-                                </Link>
-                            </li>
-                            <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle active" href="#" id="pagesMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Pages
-                                </a>
-                                <ul className="dropdown-menu" aria-labelledby="pagesMenu">
-                                    <li>
-                                        <Link className="dropdown-item" to="/about/">
-                                            <i className="bi bi-person-lines-fill"></i> About
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link className="dropdown-item" to="/contact/">
-                                            <i className="bi bi-telephone-fill"></i> Contact
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle active" href="#" id="pagesMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Dashboard
-                                </a>
-                                <ul className="dropdown-menu" aria-labelledby="pagesMenu">
-                                    <li>
-                                        <Link className="dropdown-item" to="/dashboard/">
-                                            <i className="fas fa-user"></i> Dashboard
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link className="dropdown-item" to="/posts/">
-                                            <i className="bi bi-grid-fill"></i> Posts
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link className="dropdown-item" to="/add-post/">
-                                            <i className="fas fa-plus-circle"></i> Add Post
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link className="dropdown-item" to="/comments/">
-                                            <i className="bi bi-chat-left-quote-fill"></i> Comments
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link className="dropdown-item" to="/notifications/">
-                                            <i className="fas fa-bell"></i> Notifications
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link className="dropdown-item" to="/profile/">
-                                            <i className="fas fa-user-gear"></i> Profile
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li className="nav-item">
-                                <Link to={"/register/"} className="btn btn-success" href="dashboard.html">
-                                    Register <i className="fas fa-user-plus"></i>
-                                </Link>
-                                <Link to={"/login/"} className="btn btn-success ms-2" href="dashboard.html">
-                                    Login <i className="fas fa-sign-in-alt"></i>
-                                </Link>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </header>
-    );
-}
+const Header = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  return (
+    <header className="bg-gray-900 text-white shadow-md">
+      <nav className="navbar flex justify-between items-center p-4 container mx-auto">
+        {/* Logo */}
+        <Link to="/" className="flex items-center space-x-2">
+          <img src="https://i.postimg.cc/ZRNC1mhM/my-main-logo.png" className="w-36" alt="logo" />
+        </Link>
+
+        {/* Search Bar */}
+        <div className="hidden md:flex relative">
+          <input
+            type="text"
+            placeholder="Search Articles"
+            className="input input-bordered w-72 pr-10 text-white"
+          />
+          <BiSearch className="absolute right-3 top-3 text-gray-600 text-xl" />
+        </div>
+
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center space-x-6">
+          <Link to="/" className="hover:text-gray-400">Home</Link>
+          <Link to="/category/" className="hover:text-gray-400">Category</Link>
+
+          {/* Pages Dropdown */}
+          <div className="dropdown dropdown-hover">
+            <label tabIndex={0} className="cursor-pointer">Pages</label>
+            <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-gray-800 rounded-lg w-40">
+              <li><Link to="/about/" className="hover:bg-gray-700"><FaUser /> About</Link></li>
+              <li><Link to="/contact/" className="hover:bg-gray-700"><FaComment /> Contact</Link></li>
+            </ul>
+          </div>
+
+          {/* Dashboard Dropdown */}
+          <div className="dropdown dropdown-hover">
+            <label tabIndex={0} className="cursor-pointer">Dashboard</label>
+            <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-gray-800 rounded-lg w-48">
+              <li><Link to="/dashboard/" className="hover:bg-gray-700"><FaUser /> Dashboard</Link></li>
+              <li><Link to="/posts/" className="hover:bg-gray-700"><FaGripLines /> Posts</Link></li>
+              <li><Link to="/add-post/" className="hover:bg-gray-700"><FaPlusCircle /> Add Post</Link></li>
+              <li><Link to="/comments/" className="hover:bg-gray-700"><FaComment /> Comments</Link></li>
+              <li><Link to="/notifications/" className="hover:bg-gray-700"><FaBell /> Notifications</Link></li>
+              <li><Link to="/profile/" className="hover:bg-gray-700"><FaUser /> Profile</Link></li>
+            </ul>
+          </div>
+
+          {/* Auth Buttons */}
+          <Link to="/register" className="btn btn-success flex items-center">
+            Register <BiUserPlus className="ml-1" />
+          </Link>
+          <Link to="/login" className="btn btn-primary flex items-center">
+            Login <BiLogIn className="ml-1" />
+          </Link>
+        </div>
+
+        {/* Mobile Menu Button */}
+        <button className="md:hidden text-white text-2xl" onClick={() => setMenuOpen(!menuOpen)}>
+          <BiMenu />
+        </button>
+      </nav>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="md:hidden bg-gray-800 text-white p-4 space-y-3">
+          <Link to="/" className="block hover:text-gray-400">Home</Link>
+          <Link to="/category/" className="block hover:text-gray-400">Category</Link>
+          <Link to="/about/" className="block hover:text-gray-400">About</Link>
+          <Link to="/contact/" className="block hover:text-gray-400">Contact</Link>
+          <Link to="/dashboard/" className="block hover:text-gray-400">Dashboard</Link>
+          <Link to="/register" className="btn btn-success w-full">Register</Link>
+          <Link to="/login" className="btn btn-primary w-full">Login</Link>
+        </div>
+      )}
+    </header>
+  );
+};
 
 export default Header;
