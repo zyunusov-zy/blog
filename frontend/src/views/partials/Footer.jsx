@@ -2,39 +2,24 @@ import React from "react";
 
 function Footer() {
     return (
-        <footer>
-            <div className="row bg-dark py-5 mx-0 card card-header  flex-row align-items-center text-center text-md-start">
-                <div className="col-md-5 mb-3 mb-md-0">
-                    <div className="text-primary-hover text-white">
-                        2019 - 2024{" "}
-                        <a href="https://youtube.com/@desphixs/" className="text-reset btn-link ms-2 me-2 " target="_blank">
-                            Desphixs
+        <footer className="bg-dark text-white py-3">
+            <div className="flex flex-wrap items-center justify-between mx-4 md:mx-0">
+                <div className="mb-3 md:mb-0 text-center md:text-left">
+                    <p className="text-primary-hover">
+                        2025{" "}
+                        <a
+                            href="https://github.com/Cursedzyko"
+                            className="text-reset btn-link mx-2"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Zyko
                         </a>
                         | All rights reserved
-                    </div>
+                    </p>
                 </div>
-                <div className="col-md-3 mb-3 mb-md-0">
-                    <img src="/logo.png" style={{ width: "200px" }} alt="footer logo" />
-                </div>
-                <div className="col-md-4">
-                    <ul className="nav text-primary-hover justify-content-center justify-content-md-end">
-                        <li className="nav-item">
-                            <a className="nav-link text-white px-2 fs-5" href="https://facebook.com/desphixs">
-                                <i className="fab fa-facebook-square" />
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link text-white px-2 fs-5" href="https://twitter.com/desphixs">
-                                <i className="fab fa-twitter-square" />
-                            </a>
-                        </li>
-
-                        <li className="nav-item">
-                            <a className="nav-link text-white px-2 fs-5" href="https://youtube.com/@desphixs">
-                                <i className="fab fa-youtube-square" />
-                            </a>
-                        </li>
-                    </ul>
+                <div className="mb-3 md:mb-0 text-center">
+                    <img src="/logo.png" alt="footer logo" className="w-48" />
                 </div>
             </div>
         </footer>
