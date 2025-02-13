@@ -1,8 +1,6 @@
-import React from "react";
-
 function Footer() {
     return (
-        <footer className="bg-dark text-white py-3">
+        <footer className="bg-gray-900 text-white py-3">
             <div className="flex flex-wrap items-center justify-between mx-4 md:mx-0">
                 <div className="mb-3 md:mb-0 text-center md:text-left">
                     <p className="text-primary-hover">

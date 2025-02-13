@@ -7,78 +7,41 @@ function Notifications() {
     return (
         <>
             <Header />
-            <section className="pt-5 pb-5">
-                <div className="container">
-                    <div className="row mt-0 mt-md-4">
-                        <div className="col-lg-12 col-md-8 col-12">
-                            <div className="card mb-4">
-                                <div className="card-header d-lg-flex align-items-center justify-content-between">
-                                    <div className="mb-3 mb-lg-0">
-                                        <h3 className="mb-0">Notifications</h3>
-                                        <span>Manage all your notifications from here</span>
-                                    </div>
+            <section className="pt-10 pb-10 bg-gray-900 text-white min-h-screen">
+                <div className="container mx-auto px-4">
+                    <div className="max-w-4xl mx-auto">
+                        <div className="bg-gray-800 shadow-lg rounded-lg p-6">
+                            <div className="flex justify-between items-center border-b border-gray-700 pb-4">
+                                <div>
+                                    <h3 className="text-xl font-semibold">Notifications</h3>
+                                    <span className="text-gray-400">Manage all your notifications from here</span>
                                 </div>
-                                <div className="card-body">
-                                    <ul className="list-group list-group-flush">
-                                        <li className="list-group-item p-4 shadow rounded-3 mt-4">
-                                            <div className="d-flex">
-                                                <div className="ms-3 mt-2">
-                                                    <div className="d-flex align-items-center justify-content-between">
-                                                        <div>
-                                                            <h4 className="mb-0 fw-bold">
-                                                                <i className="bi bi-chat-left-quote-fill text-success "></i> New Comment
-                                                            </h4>
-                                                            <p className="mt-3">
-                                                                Monica FineGeh commented on your post <b>How to become a better django and react.js developer</b>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <div className="mt-2">
-                                                        <p className="mt-1">
-                                                            <span className="me-2 fw-bold">
-                                                                Date: <span className="fw-light">30/11/24</span>
-                                                            </span>
-                                                        </p>
-                                                        <p>
-                                                            <button class="btn btn-outline-secondary" type="button">
-                                                                Mark as Seen <i className="fas fa-check"></i>
-                                                            </button>
-                                                        </p>
-                                                    </div>
-                                                </div>
+                            </div>
+                            <div className="mt-4">
+                                <ul className="space-y-4">
+                                    <li className="bg-gray-700 p-4 rounded-lg shadow">
+                                        <div className="flex items-center space-x-4">
+                                            <i className="bi bi-chat-left-quote-fill text-green-400 text-2xl"></i>
+                                            <div>
+                                                <h4 className="text-lg font-bold">New Comment</h4>
+                                                <p className="text-gray-300">Monica FineGeh commented on your post <b>How to become a better Django and React.js developer</b></p>
+                                                <p className="text-gray-400 text-sm">Date: 30/11/24</p>
+                                                <button className="mt-2 bg-gray-600 hover:bg-gray-500 text-white py-1 px-3 rounded">Mark as Seen <i className="fas fa-check"></i></button>
                                             </div>
-                                        </li>
-
-                                        <li className="list-group-item p-4 shadow rounded-3 mt-4">
-                                            <div className="d-flex">
-                                                <div className="ms-3 mt-2">
-                                                    <div className="d-flex align-items-center justify-content-between">
-                                                        <div>
-                                                            <h4 className="mb-0 fw-bold">
-                                                                <i className="fas fa-thumbs-up text-primary "></i> New Like
-                                                            </h4>
-                                                            <p className="mt-3">
-                                                                Destiny Franks liked your post <b>How to become a better django and react.js developer</b>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <div className="mt-2">
-                                                        <p className="mt-1">
-                                                            <span className="me-2 fw-bold">
-                                                                Date: <span className="fw-light">30/11/24</span>
-                                                            </span>
-                                                        </p>
-                                                        <p>
-                                                            <button class="btn btn-outline-secondary" type="button">
-                                                                Mark as Seen <i className="fas fa-check"></i>
-                                                            </button>
-                                                        </p>
-                                                    </div>
-                                                </div>
+                                        </div>
+                                    </li>
+                                    <li className="bg-gray-700 p-4 rounded-lg shadow">
+                                        <div className="flex items-center space-x-4">
+                                            <i className="fas fa-thumbs-up text-blue-400 text-2xl"></i>
+                                            <div>
+                                                <h4 className="text-lg font-bold">New Like</h4>
+                                                <p className="text-gray-300">Destiny Franks liked your post <b>How to become a better Django and React.js developer</b></p>
+                                                <p className="text-gray-400 text-sm">Date: 30/11/24</p>
+                                                <button className="mt-2 bg-gray-600 hover:bg-gray-500 text-white py-1 px-3 rounded">Mark as Seen <i className="fas fa-check"></i></button>
                                             </div>
-                                        </li>
-                                    </ul>
-                                </div>
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>

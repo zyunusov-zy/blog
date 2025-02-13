@@ -7,85 +7,63 @@ function AddPost() {
     return (
         <>
             <Header />
-            <section className="pt-5 pb-5">
-                <div className="container">
-                    <div className="row mt-0 mt-md-4">
-                        <div className="col-lg-12 col-md-8 col-12">
-                            <>
-                                <section className="py-4 py-lg-6 bg-primary rounded-3">
-                                    <div className="container">
-                                        <div className="row">
-                                            <div className="offset-lg-1 col-lg-10 col-md-12 col-12">
-                                                <div className="d-lg-flex align-items-center justify-content-between">
-                                                    <div className="mb-4 mb-lg-0">
-                                                        <h1 className="text-white mb-1">Create Blog Post</h1>
-                                                        <p className="mb-0 text-white lead">Use the article builder below to write your article.</p>
-                                                    </div>
-                                                    <div>
-                                                        <Link to="/instructor/posts/" className="btn" style={{ backgroundColor: "white" }}>
-                                                            {" "}
-                                                            <i className="fas fa-arrow-left"></i> Back to Posts
-                                                        </Link>
-                                                        <a href="instructor-posts.html" className="btn btn-dark ms-2">
-                                                            Save Changes <i className="fas fa-check-circle"></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-                                <section className="pb-8 mt-5">
-                                    <div className="card mb-3">
-                                        {/* Basic Info Section */}
-                                        <div className="card-header border-bottom px-4 py-3">
-                                            <h4 className="mb-0">Basic Information</h4>
-                                        </div>
-                                        <div className="card-body">
-                                            <label htmlFor="postTHumbnail" className="form-label">
-                                                Preview
-                                            </label>
-                                            <img style={{ width: "100%", height: "330px", objectFit: "cover", borderRadius: "10px" }} className="mb-4" src="https://www.eclosio.ong/wp-content/uploads/2018/08/default.png" alt="" />
-                                            <div className="mb-3">
-                                                <label htmlFor="postTHumbnail" className="form-label">
-                                                    Thumbnail
-                                                </label>
-                                                <input id="postTHumbnail" className="form-control" type="file" />
-                                            </div>
-
-                                            <div className="mb-3">
-                                                <label className="form-label">Title</label>
-                                                <input className="form-control" type="text" placeholder="" />
-                                                <small>Write a 60 character post title.</small>
-                                            </div>
-                                            <div className="mb-3">
-                                                <label className="form-label">Posts category</label>
-                                                <select className="form-select">
-                                                    <option value="">-------------</option>
-                                                    <option value="React">Lifstyle</option>
-                                                    <option value="Javascript">Fashion</option>
-                                                    <option value="HTML">Tech</option>
-                                                    <option value="Vue">Health</option>
-                                                    <option value="Gulp">Entertainment</option>
-                                                </select>
-                                                <small>Help people find your posts by choosing categories that represent your post.</small>
-                                            </div>
-
-                                            <div className="mb-3">
-                                                <label className="form-label">Post Description</label>
-                                                <textarea name="" className="form-control" id="" cols="30" rows="10"></textarea>
-                                                <small>A brief summary of your posts.</small>
-                                            </div>
-                                            <label className="form-label">Tag</label>
-                                            <input className="form-control" type="number" placeholder="health, medicine, fitness" />
-                                        </div>
-                                    </div>
-                                    <button className="btn btn-lg btn-success w-100 mt-2" type="button">
-                                        Create Post <i className="fas fa-check-circle"></i>
-                                    </button>
-                                </section>
-                            </>
+            <section className="bg-gradient-to-b from-gray-900 to-black text-white py-5">
+                <div className="container mx-auto px-4">
+                    <div className="bg-gray-800 p-6 rounded-lg shadow-md flex flex-col md:flex-row justify-between items-center">
+                        <div>
+                            <h1 className="text-2xl font-bold">Create Blog Post</h1>
+                            <p className="text-lg">Use the article builder below to write your article.</p>
                         </div>
+                        <div className="mt-4 md:mt-0">
+                            <Link to="/instructor/posts/" className="bg-gray-700 text-white px-4 py-2 rounded-lg shadow-md hover:bg-gray-600"> 
+                                <i className="fas fa-arrow-left"></i> Back to Posts
+                            </Link>
+                            <button className="bg-green-600 text-white px-4 py-2 rounded-lg ml-2 hover:bg-green-500">
+                                Save Changes <i className="fas fa-check-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="bg-gray-800 p-6 mt-6 rounded-lg shadow-md">
+                        <h2 className="text-xl font-semibold mb-4">Basic Information</h2>
+                        <label className="block text-gray-300">Preview</label>
+                        <img className="w-full h-80 object-cover rounded-lg mb-4" src="https://www.eclosio.ong/wp-content/uploads/2018/08/default.png" alt="Preview" />
+                        
+                        <div className="mb-4">
+                            <label className="block text-gray-300">Thumbnail</label>
+                            <input type="file" className="border w-full p-2 rounded-lg bg-gray-700 text-white" />
+                        </div>
+                        
+                        <div className="mb-4">
+                            <label className="block text-gray-300">Title</label>
+                            <input type="text" className="border w-full p-2 rounded-lg bg-gray-700 text-white" placeholder="Write a 60 character post title." />
+                        </div>
+                        
+                        <div className="mb-4">
+                            <label className="block text-gray-300">Post Category</label>
+                            <select className="border w-full p-2 rounded-lg bg-gray-700 text-white">
+                                <option value="">-------------</option>
+                                <option value="Lifestyle">Lifestyle</option>
+                                <option value="Fashion">Fashion</option>
+                                <option value="Tech">Tech</option>
+                                <option value="Health">Health</option>
+                                <option value="Entertainment">Entertainment</option>
+                            </select>
+                        </div>
+
+                        <div className="mb-4">
+                            <label className="block text-gray-300">Post Description</label>
+                            <textarea className="border w-full p-2 rounded-lg bg-gray-700 text-white" rows="5" placeholder="A brief summary of your post..."></textarea>
+                        </div>
+
+                        <div className="mb-4">
+                            <label className="block text-gray-300">Tags</label>
+                            <input type="text" className="border w-full p-2 rounded-lg bg-gray-700 text-white" placeholder="e.g. health, fitness, tech" />
+                        </div>
+
+                        <button className="bg-green-500 text-white w-full p-3 rounded-lg hover:bg-green-400">
+                            Create Post <i className="fas fa-check-circle"></i>
+                        </button>
                     </div>
                 </div>
             </section>
