@@ -1,8 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../partials/Header";
 import Footer from "../partials/Footer";
 import { Link } from "react-router-dom";
+
+import apiInstance from "../../utils/axios";
+import Moment from "../../plugin/Moment";
+import Toast from "../../plugin/Toast";
+
 function Index() {
+  const [posts, setPosts] = useState([]);
+  const [category, setCategory] = useState([]);
+
+  const fetchPosts = async () => {
+    try {
+      const category_response = await apiInstance.get(`post/category/list/`);
+      const posts_response = await apiInstance.get(`post/lists/`);
+      console.log(posts);
+      setPosts(posts_response.data);
+      setCategory(category_response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+  // Pagination
+  const itemsPerPage = 1;
+  const [currentPage, setCurrentPage] = useState(1);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const postItems = posts?.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(posts?.length / itemsPerPage);
+  const pageNumbers = Array.from(
+    { length: totalPages },
+    (_, index) => index + 1
+  );
+
+  
   return (
     <div>
       <Header />
@@ -30,151 +66,79 @@ function Index() {
         <div className="w-full px-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Card 1 */}
-            <div className="bg-gray-900 rounded-lg shadow-lg overflow-hidden">
-              <div className="relative">
-                <img
-                  className="w-full h-40 object-cover"
-                  src="https://awcdn1.ahmad.works/writing/wp-content/uploads/2015/05/kitchen-and-dining-room-P5JHHM6.jpg"
-                  alt="Card image"
-                />
-              </div>
-              <div className="p-4">
-                <h4 className="text-lg font-semibold text-gray-200">
-                  <a href="#" className="text-blue-400 hover:underline">
-                    7 Common Mistakes Everyone Makes While Traveling
-                  </a>
-                </h4>
-                <div className="flex gap-3 mt-2">
-                  <button className="text-red-500 hover:text-red-400 transition">
-                    <i className="fas fa-bookmark"></i>
-                  </button>
-                  <button className="text-blue-500 hover:text-blue-400 transition">
-                    <i className="fas fa-thumbs-up"></i>
-                  </button>
+            {postItems.map((post) => (
+              <div
+                key={post?.id}
+                className="bg-gray-900 rounded-lg shadow-lg overflow-hidden"
+              >
+                <div className="relative">
+                  <img
+                    className="w-full h-40 object-cover"
+                    src={post.image}
+                    alt="Card image"
+                  />
                 </div>
-                <ul className="mt-3 space-y-2 text-gray-400">
-                  <li className="flex items-center gap-2">
-                    <i className="fas fa-user"></i> Louis Ferguson
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <i className="fas fa-calendar"></i> Mar 07, 2022
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <i className="fas fa-eye"></i> 10 Views
-                  </li>
-                </ul>
+                <div className="p-4">
+                  <h4 className="text-lg font-semibold text-gray-200">
+                    <Link
+                      to={post.slug}
+                      className="text-blue-400 hover:underline"
+                    >
+                      {post.title}
+                    </Link>
+                  </h4>
+                  <ul className="mt-3 space-y-2 text-gray-400">
+                    <li className="flex items-center gap-2">
+                      <i className="fas fa-user"></i> {post.profile.full_name}
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <i className="fas fa-calendar"></i> {Moment(post.date)}
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <i className="fas fa-eye"></i> {post.view} Views
+                    </li>
+                  </ul>
+                </div>
               </div>
-            </div>
-
-            {/* Card 2 */}
-            <div className="bg-gray-900 rounded-lg shadow-lg overflow-hidden">
-              <div className="relative">
-                <img
-                  className="w-full h-40 object-cover"
-                  src="https://awcdn1.ahmad.works/writing/wp-content/uploads/2015/05/black-woman-smiling-with-hands-in-hair-PMCFL93-1.jpg"
-                  alt="Card image"
-                />
-              </div>
-              <div className="p-4">
-                <h4 className="text-lg font-semibold text-gray-200">
-                  <a href="#" className="text-blue-400 hover:underline">
-                    7 Common Mistakes Everyone Makes While Traveling
-                  </a>
-                </h4>
-                <ul className="mt-3 space-y-2 text-gray-400">
-                  <li className="flex items-center gap-2">
-                    <i className="fas fa-user"></i> Louis Ferguson
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <i className="fas fa-calendar"></i> Mar 07, 2022
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <i className="fas fa-eye"></i> 10 Views
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Card 3 */}
-            <div className="bg-gray-900 rounded-lg shadow-lg overflow-hidden">
-              <div className="relative">
-                <img
-                  className="w-full h-40 object-cover"
-                  src="https://awcdn1.ahmad.works/writing/wp-content/uploads/2015/05/flat-with-touch-of-creativity-PX387LV-2.jpg"
-                  alt="Card image"
-                />
-              </div>
-              <div className="p-4">
-                <h4 className="text-lg font-semibold text-gray-200">
-                  <a href="#" className="text-blue-400 hover:underline">
-                    7 Common Mistakes Everyone Makes While Traveling
-                  </a>
-                </h4>
-                <ul className="mt-3 space-y-2 text-gray-400">
-                  <li className="flex items-center gap-2">
-                    <i className="fas fa-user"></i> Louis Ferguson
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <i className="fas fa-calendar"></i> Mar 07, 2022
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <i className="fas fa-eye"></i> 10 Views
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Card 4 */}
-            <div className="bg-gray-900 rounded-lg shadow-lg overflow-hidden">
-              <div className="relative">
-                <img
-                  className="w-full h-40 object-cover"
-                  src="https://awcdn1.ahmad.works/writing/wp-content/uploads/2015/05/young-handsome-afro-black-man-going-upstairs-from-PJWPWPR-2.jpg"
-                  alt="Card image"
-                />
-              </div>
-              <div className="p-4">
-                <h4 className="text-lg font-semibold text-gray-200">
-                  <a href="#" className="text-blue-400 hover:underline">
-                    7 Common Mistakes Everyone Makes While Traveling
-                  </a>
-                </h4>
-                <ul className="mt-3 space-y-2 text-gray-400">
-                  <li className="flex items-center gap-2">
-                    <i className="fas fa-user"></i> Louis Ferguson
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <i className="fas fa-calendar"></i> Mar 07, 2022
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <i className="fas fa-eye"></i> 10 Views
-                  </li>
-                </ul>
-              </div>
-            </div>
+            ))}
           </div>
 
           {/* Pagination */}
           <nav className="flex justify-center mt-6">
             <ul className="flex space-x-2">
-              <li>
-                <button className="px-4 py-2 bg-gray-800 text-gray-200 rounded hover:bg-gray-700 transition">
+              <li className="page-item">
+                <button
+                  className={`px-4 py-2 rounded transition 
+                    ${currentPage === 1 ? "bg-gray-600 text-gray-400 cursor-not-allowed" : "bg-gray-800 text-gray-200 hover:bg-gray-700"}`}
+                  disabled={currentPage === 1}
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                >
                   <i className="fas fa-arrow-left mr-2"></i> Previous
                 </button>
               </li>
+              {pageNumbers?.map((number) => (
+                <li key={number}>
+                  <button
+                    className={`px-4 py-2 rounded transition 
+                      ${
+                        currentPage === number
+                          ? "bg-gray-700 text-gray-300 "
+                          : "bg-gray-800 text-gray-200 hover:bg-gray-700 transition"
+                      }`}
+                    onClick={() => setCurrentPage(number)}
+                  >
+                    {number}
+                  </button>
+                </li>
+              ))}
               <li>
-                <button className="px-4 py-2 bg-gray-700 text-gray-300 rounded">
-                  1
-                </button>
-              </li>
-              <li>
-                <button className="px-4 py-2 bg-gray-800 text-gray-200 rounded hover:bg-gray-700 transition">
-                  2
-                </button>
-              </li>
-              <li>
-                <button className="px-4 py-2 bg-gray-800 text-gray-200 rounded hover:bg-gray-700 transition">
-                  Next <i className="fas fa-arrow-right ml-2"></i>
+                <button
+                  className={`px-4 py-2 rounded transition 
+    ${currentPage === totalPages ? "bg-gray-600 text-gray-400 cursor-not-allowed" : "bg-gray-800 text-gray-200 hover:bg-gray-700"}`}
+                  disabled={currentPage === totalPages}
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                >
+                  <i className="fas fa-arrow-left mr-2"></i> Next
                 </button>
               </li>
             </ul>
@@ -188,97 +152,19 @@ function Index() {
             <h2 className="text-xl font-semibold">Categories</h2>
           </div>
           <div className="flex flex-wrap justify-between">
-            <div className="mt-2">
-              <div className="bg-gray-900 rounded-lg p-2">
+            {category.map((categ) => (
+              <div className="bg-gray-900 rounded-lg p-2" key={categ?.id}>
                 <img
                   className="w-36 h-20 object-cover rounded-md"
-                  src="https://awcdn1.ahmad.works/writing/wp-content/uploads/2015/05/father-son-1.jpg"
+                  src={categ.image}
                   alt="card image"
                 />
                 <div className="flex flex-col items-center mt-3 pb-2">
-                  <h5 className="mb-0">Life Style</h5>
-                  <small>3 Articles</small>
+                  <h5 className="mb-0">{categ.title}</h5>
+                  <small>{categ.post_count || "0"} Articles</small>
                 </div>
               </div>
-            </div>
-            <div className="mt-2">
-              <div className="bg-gray-900 rounded-lg p-2">
-                <img
-                  className="w-36 h-20 object-cover rounded-md"
-                  src="https://assets.entrepreneur.com/content/3x2/2000/1599591949-GettyImages-1174414266.jpg"
-                  alt="card image"
-                />
-                <div className="flex flex-col items-center mt-3 pb-2">
-                  <h5 className="mb-0">Entertainment</h5>
-                  <small>1 Article</small>
-                </div>
-              </div>
-            </div>
-            <div className="mt-2">
-              <div className="bg-gray-900 rounded-lg p-2">
-                <img
-                  className="w-36 h-20 object-cover rounded-md"
-                  src="https://imageio.forbes.com/specials-images/imageserve/5d35eacaf1176b0008974b54/2020-Chevrolet-Corvette-Stingray/0x0.jpg?format=jpg&crop=4560,2565,x790,y784,safe&width=960"
-                  alt="card image"
-                />
-                <div className="flex flex-col items-center mt-3 pb-2">
-                  <h5 className="mb-0">Cars</h5>
-                  <small>2 Articles</small>
-                </div>
-              </div>
-            </div>
-            <div className="mt-2">
-              <div className="bg-gray-900 rounded-lg p-2">
-                <img
-                  className="w-36 h-20 object-cover rounded-md"
-                  src="https://guardian.ng/wp-content/uploads/2019/03/sport-equipment-e1555707764770.jpeg"
-                  alt="card image"
-                />
-                <div className="flex flex-col items-center mt-3 pb-2">
-                  <h5 className="mb-0">Sports</h5>
-                  <small>8 Articles</small>
-                </div>
-              </div>
-            </div>
-            <div className="mt-2">
-              <div className="bg-gray-900 rounded-lg p-2">
-                <img
-                  className="w-36 h-20 object-cover rounded-md"
-                  src="https://aliviohealth.com/wp-content/uploads/2022/07/Managing-Mental-Health-During-COVID-19.jpg"
-                  alt="card image"
-                />
-                <div className="flex flex-col items-center mt-3 pb-2">
-                  <h5 className="mb-0">Health</h5>
-                  <small>7 Articles</small>
-                </div>
-              </div>
-            </div>
-            <div className="mt-2">
-              <div className="bg-gray-900 rounded-lg p-2">
-                <img
-                  className="w-36 h-20 object-cover rounded-md"
-                  src="https://www.realsimple.com/thmb/yla86Nr8GjRXe_9IyADQ638gPrg=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/fashion-trends-GettyImages-1457816153-d2982e954afe4b42bf5587f087da90d4.jpg"
-                  alt="card image"
-                />
-                <div className="flex flex-col items-center mt-3 pb-2">
-                  <h5 className="mb-0">Fashion</h5>
-                  <small>4 Articles</small>
-                </div>
-              </div>
-            </div>
-            <div className="mt-2">
-              <div className="bg-gray-900 rounded-lg p-2">
-                <img
-                  className="w-36 h-20 object-cover rounded-md"
-                  src="https://insight.ng/wp-content/uploads/2022/01/andrey-suslov-shutterstock-1199480788_w400-3.png"
-                  alt="card image"
-                />
-                <div className="flex flex-col items-center mt-3 pb-2">
-                  <h5 className="mb-0">Tech</h5>
-                  <small>13 Articles</small>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -296,7 +182,7 @@ function Index() {
         </div>
       </section>
 
-      <section className="pt-4 pb-0 bg-gray-600 pb-2">
+      <section className="pt-4  bg-gray-600 pb-2">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap -mx-2">
             {[1, 2, 3, 4, 5, 6, 7, 8].map((index) => (

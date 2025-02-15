@@ -77,7 +77,7 @@ class Category(models.Model):
         if self.slug == "" or self.slug == None:
             self.slug = slugify(self.title)
             
-            super(Category, self).save(*args, **kwargs)
+        super(Category, self).save(*args, **kwargs)
 
     def post_count(self):
         return Post.objects.filter(category=self).count()
@@ -97,7 +97,7 @@ class Post(models.Model):
     status = models.CharField(choices=STATUS, max_length=100, default="Active")
     title = models.CharField(max_length=100)
     description = models.TextField(null=True, blank=True)
-    tags = models.CharField(max_length=100)
+    tags = models.CharField(max_length=100, blank=True, null=True)
     image = models.FileField(upload_to="image", null=True, blank=True)
     view = models.IntegerField(default=0)
     like = models.ManyToManyField(User, blank=True, related_name="likes_user")
