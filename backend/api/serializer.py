@@ -70,6 +70,7 @@ class CommentSerializer(serializers.ModelSerializer):
             self.Meta.depth = 3
             
 class PostSerializer(serializers.ModelSerializer):
+    comments = CommentSerializer(many=True)
     class Meta:
         model = api_models.Post
         fields = "__all__"
