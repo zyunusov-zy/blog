@@ -7,7 +7,8 @@ import { useAuthStore } from "../../store/auth";
 const Header = () => {
   const [isLoggedIn, user] = useAuthStore((state) => [state.isLoggedIn, state.user]);
   const [menuOpen, setMenuOpen] = useState(false);
-
+  console.log(user())
+  console.log(isLoggedIn())
   return (
     <header className="bg-gray-900 text-white shadow-md">
       <nav className="navbar flex justify-between items-center p-4 container mx-auto">

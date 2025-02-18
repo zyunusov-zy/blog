@@ -1,9 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../partials/Header";
 import Footer from "../partials/Footer";
 import { Link } from "react-router-dom";
+import useUserData from "../../plugin/useUserData";
+import apiInstance from "../../utils/axios";
+import Moment from "../../plugin/Moment";
 
 function Dashboard() {
+  const [stats, setStats] = useState([]);
+  const [posts, setPosts] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [noti, setNoti] = useState([]);
+
+  const user_id = useUserData()?.user_id;
+
+  const fetchDashboardData = async () => {
+    const stats_res = await apiInstance.get(
+      `author/dashboard/stats/${user_id}/`
+    );
+    setStats(stats_res?.data[0]);
+
+    
+    const posts_res = await apiInstance.get(
+      `author/dashboard/post-list/${user_id}/`
+    );
+    setPosts(posts_res?.data);
+    
+    const commets_res = await apiInstance.get(
+      `author/dashboard/comment-list/${user_id}/`
+    );
+    setComments(commets_res?.data);
+    console.log("Stats:", commets_res.data);
+    
+    const noti_res = await apiInstance.get(
+      `author/dashboard/noti-list/${user_id}/`
+    );
+    setNoti(noti_res?.data);
+  };
+
+  useEffect(() => {
+    fetchDashboardData();
+    // console.log("Stats:",stats)
+  }, []);
+
   return (
     <div className="dark:bg-gray-800 dark:text-gray-100 min-h-screen">
       <Header />
@@ -18,7 +57,9 @@ function Dashboard() {
                       <i className="bi bi-people-fill" />
                     </div>
                     <div className="ml-3">
-                      <h3 className="text-2xl font-bold">654</h3>
+                      <h3 className="text-2xl font-bold">
+                        {stats.views || "0"}
+                      </h3>
                       <h6 className="text-sm text-gray-500 dark:text-gray-400">
                         Total Views
                       </h6>
@@ -31,7 +72,7 @@ function Dashboard() {
                       <i className="bi bi-file-earmark-text-fill" />
                     </div>
                     <div className="ml-3">
-                      <h3 className="text-2xl font-bold">25</h3>
+                      <h3 className="text-2xl font-bold">{stats?.posts}</h3>
                       <h6 className="text-sm text-gray-500 dark:text-gray-400">
                         Posts
                       </h6>
@@ -44,7 +85,9 @@ function Dashboard() {
                       <i className="bi bi-suit-heart-fill" />
                     </div>
                     <div className="ml-3">
-                      <h3 className="text-2xl font-bold">210</h3>
+                      <h3 className="text-2xl font-bold">
+                        {stats?.likes || "0"}
+                      </h3>
                       <h6 className="text-sm text-gray-500 dark:text-gray-400">
                         Likes
                       </h6>
@@ -57,7 +100,7 @@ function Dashboard() {
                       <i className="bi bi-tag" />
                     </div>
                     <div className="ml-3">
-                      <h3 className="text-2xl font-bold">84K</h3>
+                      <h3 className="text-2xl font-bold">{stats?.bookmarks}</h3>
                       <h6 className="text-sm text-gray-500 dark:text-gray-400">
                         Bookmarks
                       </h6>
@@ -68,7 +111,7 @@ function Dashboard() {
             </div>
 
             <div className="col-span-12 md:col-span-6 xl:col-span-4">
-              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg h-full">
+              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg h-full flex flex-col">
                 <div className="border-b border-gray-200 dark:border-gray-700 p-3 flex justify-between items-center">
                   <h5 className="font-bold">Latest Posts</h5>
                   <div className="dropdown">
@@ -77,88 +120,51 @@ function Dashboard() {
                     </button>
                   </div>
                 </div>
-                <div className="p-3">
+                <div className="p-3 flex-1">
                   <div className="space-y-3">
-                    <div className="flex relative">
-                      <img
-                        className="w-24 h-24 rounded-lg object-cover"
-                        src="https://awcdn1.ahmad.works/writing/wp-content/uploads/2015/05/flat-with-touch-of-creativity-PX387LV-2.jpg"
-                        alt="product"
-                      />
-                      <div className="ml-3">
-                        <a
-                          href="#"
-                          className="font-semibold text-gray-900 dark:text-gray-100 hover:underline"
-                        >
-                          Dirty little secrets about the business industry
-                        </a>
-                        <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-                          <i className="fas fa-calendar mr-2"></i>Jun 17, 2022
-                        </p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
-                          <i className="fas fa-eye mr-2"></i>10 Views
-                        </p>
-                      </div>
-                    </div>
-                    <hr className="my-3 border-gray-200 dark:border-gray-700" />
-                    <div className="flex relative">
-                      <img
-                        className="w-24 h-24 rounded-lg object-cover"
-                        src="https://awcdn1.ahmad.works/writing/wp-content/uploads/2015/05/flat-with-touch-of-creativity-PX387LV-2.jpg"
-                        alt="product"
-                      />
-                      <div className="ml-3">
-                        <a
-                          href="#"
-                          className="font-semibold text-gray-900 dark:text-gray-100 hover:underline"
-                        >
-                          Dirty little secrets about the business industry
-                        </a>
-                        <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-                          <i className="fas fa-calendar mr-2"></i>Jun 17, 2022
-                        </p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
-                          <i className="fas fa-eye mr-2"></i>10 Views
-                        </p>
-                      </div>
-                    </div>
-                    <hr className="my-3 border-gray-200 dark:border-gray-700" />
-                    <div className="flex relative">
-                      <img
-                        className="w-24 h-24 rounded-lg object-cover"
-                        src="https://awcdn1.ahmad.works/writing/wp-content/uploads/2015/05/flat-with-touch-of-creativity-PX387LV-2.jpg"
-                        alt="product"
-                      />
-                      <div className="ml-3">
-                        <a
-                          href="#"
-                          className="font-semibold text-gray-900 dark:text-gray-100 hover:underline"
-                        >
-                          Dirty little secrets about the business industry
-                        </a>
-                        <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-                          <i className="fas fa-calendar mr-2"></i>Jun 17, 2022
-                        </p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
-                          <i className="fas fa-eye mr-2"></i>10 Views
-                        </p>
-                      </div>
-                    </div>
+                    {posts?.slice(0, 3).map((post, index) => (
+                      <>
+                        <div className="flex relative">
+                          <img
+                            className="w-24 h-24 rounded-lg object-cover"
+                            src={post?.image}
+                            alt="product"
+                          />
+                          <div className="ml-3">
+                            <a
+                              href="#"
+                              className="font-semibold text-gray-900 dark:text-gray-100 hover:underline"
+                            >
+                              {post?.title}
+                            </a>
+                            <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                              <i className="fas fa-calendar mr-2"></i>{" "}
+                              {Moment(post?.date)}
+                            </p>
+                            <p className="text-sm text-gray-500 dark:text-gray-400">
+                              <i className="fas fa-eye mr-2"></i>
+                              {post?.view} Views
+                            </p>
+                          </div>
+                        </div>
+                        <hr className="my-3 border-gray-200 dark:border-gray-700 " />
+                      </>
+                    ))}
                   </div>
                 </div>
                 <div className="border-t border-gray-200 dark:border-gray-700 text-center p-3">
-                  <a
-                    href="#"
+                  <Link
+                    to="/posts/"
                     className="font-bold text-gray-900 dark:text-gray-100 hover:underline"
                   >
                     View all Posts
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
 
             <div className="col-span-12 md:col-span-6 xl:col-span-4">
-              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg h-full">
+              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg h-full flex flex-col">
                 <div className="border-b border-gray-200 dark:border-gray-700 p-3 flex justify-between items-center">
                   <h5 className="font-bold">Recent Comments</h5>
                   <div className="dropdown">
@@ -167,76 +173,48 @@ function Dashboard() {
                     </button>
                   </div>
                 </div>
-                <div className="p-3">
+                <div className="p-3 flex-1">
                   <div className="space-y-3">
-                    <div className="flex items-center relative">
-                      <img
-                        className="w-16 h-16 rounded-full object-cover"
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVSPtLWfht2p015onFngljcoIuA9xc8h3RLA&usqp=CAU"
-                        alt="avatar"
-                      />
-                      <div className="ml-3">
-                        <p className="text-sm text-gray-900 dark:text-gray-100">
-                          <a href="#" className="font-semibold hover:underline">
-                            Thanks for the post, please post regularly.
-                          </a>
-                        </p>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
-                          <i>by</i> Monica Sweet
-                        </p>
-                      </div>
-                    </div>
-                    <hr className="my-3 border-gray-200 dark:border-gray-700" />
-                    <div className="flex items-center relative">
-                      <img
-                        className="w-16 h-16 rounded-full object-cover"
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVSPtLWfht2p015onFngljcoIuA9xc8h3RLA&usqp=CAU"
-                        alt="avatar"
-                      />
-                      <div className="ml-3">
-                        <p className="text-sm text-gray-900 dark:text-gray-100">
-                          <a href="#" className="font-semibold hover:underline">
-                            Thanks for the post, please post regularly.
-                          </a>
-                        </p>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
-                          <i>by</i> Monica Sweet
-                        </p>
-                      </div>
-                    </div>
-                    <hr className="my-3 border-gray-200 dark:border-gray-700" />
-                    <div className="flex items-center relative">
-                      <img
-                        className="w-16 h-16 rounded-full object-cover"
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVSPtLWfht2p015onFngljcoIuA9xc8h3RLA&usqp=CAU"
-                        alt="avatar"
-                      />
-                      <div className="ml-3">
-                        <p className="text-sm text-gray-900 dark:text-gray-100">
-                          <a href="#" className="font-semibold hover:underline">
-                            Thanks for the post, please post regularly.
-                          </a>
-                        </p>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
-                          <i>by</i> Monica Sweet
-                        </p>
-                      </div>
-                    </div>
+                    {comments.slice(0, 6).map((comment, index) => (
+                      <>
+                        <div className="flex items-center relative">
+                          {/* <img
+                            className="w-16 h-16 rounded-full object-cover"
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVSPtLWfht2p015onFngljcoIuA9xc8h3RLA&usqp=CAU"
+                            alt="avatar"
+                          /> */}
+                          <div className="ml-3">
+                            <p className="text-sm text-gray-900 dark:text-gray-100">
+                              <Link
+                                to="/comments/"
+                                className="font-semibold hover:underline"
+                              >
+                                {comment?.comment}
+                              </Link>
+                            </p>
+                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                              <i>by</i> {comment?.name}
+                            </p>
+                          </div>
+                        </div>
+                        <hr className="my-3 border-gray-200 dark:border-gray-700" />
+                      </>
+                    ))}
                   </div>
                 </div>
-                <div className="border-t border-gray-200 dark:border-gray-700 text-center p-3">
-                  <a
-                    href="#"
+                <div className="border-t border-gray-200 dark:border-gray-700 text-center p-3 justify-self-end">
+                  <Link
+                    to="/comments/"
                     className="font-bold text-gray-900 dark:text-gray-100 hover:underline"
                   >
                     View all Comments
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
 
             <div className="col-span-12 md:col-span-6 xl:col-span-4">
-              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg h-full">
+              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg h-full flex flex-col">
                 <div className="border-b border-gray-200 dark:border-gray-700 p-3 flex justify-between items-center">
                   <h5 className="font-bold">Notifications</h5>
                   <div className="dropdown">
@@ -245,7 +223,7 @@ function Dashboard() {
                     </button>
                   </div>
                 </div>
-                <div className="p-3">
+                <div className="p-3 flex-1">
                   <div className="space-y-3">
                     <div className="flex justify-between relative">
                       <div className="flex items-center">
@@ -424,16 +402,16 @@ function Dashboard() {
                         </tr>
                       </thead>
                       <tbody className="border-top-0">
-                        <tr>
+                      {posts.slice(0, 5).map((post, index) => (
+                        <tr key={index}>
                           <td>
                             <h6 className="mt-2 mt-md-0 mb-0 ">
-                              <a
-                                href="#"
+                              <Link
+                                to={post?.slug}
                                 className="text-dark text-decoration-none dark:text-white"
                               >
-                                How to become a better Django and React
-                                developer
-                              </a>
+                                {post?.title}
+                              </Link>
                             </h6>
                           </td>
                           <td>
@@ -442,15 +420,15 @@ function Dashboard() {
                                 href="#"
                                 className="text-dark text-decoration-none dark:text-white"
                               >
-                                201 Views
+                                {post?.view} Views
                               </a>
                             </h6>
                           </td>
-                          <td>March 21, 2024.</td>
-                          <td>Technology</td>
+                          <td>{Moment(post?.date)}</td>
+                          <td>{post?.category?.title}</td>
                           <td>
                             <span className="badge bg-success bg-opacity-10 text-black mb-2">
-                              Live
+                              {post?.status}
                             </span>
                           </td>
                           <td>
@@ -476,214 +454,8 @@ function Dashboard() {
                             </div>
                           </td>
                         </tr>
-                        <tr>
-                          <td>
-                            <h6 className="mt-2 mt-md-0 mb-0 ">
-                              <a
-                                href="#"
-                                className="text-dark text-decoration-none dark:text-white"
-                              >
-                                How to become a better Django and React
-                                developer
-                              </a>
-                            </h6>
-                          </td>
-                          <td>
-                            <h6 className="mb-0">
-                              <a
-                                href="#"
-                                className="text-dark text-decoration-none dark:text-white"
-                              >
-                                201 Views
-                              </a>
-                            </h6>
-                          </td>
-                          <td>March 21, 2024.</td>
-                          <td>Technology</td>
-                          <td>
-                            <span className="badge bg-success bg-opacity-10 text-black mb-2">
-                              Live
-                            </span>
-                          </td>
-                          <td>
-                            <div className="d-flex gap-2">
-                              <a
-                                href="#"
-                                className="btn-round mb-0 btn btn-danger"
-                                data-bs-toggle="tooltip"
-                                data-bs-placement="top"
-                                title="Delete"
-                              >
-                                <i className="bi bi-trash" />
-                              </a>
-                              <a
-                                href="dashboard-post-edit.html"
-                                className="btn btn-primary btn-round mb-0"
-                                data-bs-toggle="tooltip"
-                                data-bs-placement="top"
-                                title="Edit"
-                              >
-                                <i className="bi bi-pencil-square" />
-                              </a>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <h6 className="mt-2 mt-md-0 mb-0 ">
-                              <a
-                                href="#"
-                                className="text-dark text-decoration-none dark:text-white"
-                              >
-                                How to become a better Django and React
-                                developer
-                              </a>
-                            </h6>
-                          </td>
-                          <td>
-                            <h6 className="mb-0">
-                              <a
-                                href="#"
-                                className="text-dark text-decoration-none dark:text-white"
-                              >
-                                201 Views
-                              </a>
-                            </h6>
-                          </td>
-                          <td>March 21, 2024.</td>
-                          <td>Technology</td>
-                          <td>
-                            <span className="badge bg-success bg-opacity-10 text-black mb-2">
-                              Live
-                            </span>
-                          </td>
-                          <td>
-                            <div className="d-flex gap-2">
-                              <a
-                                href="#"
-                                className="btn-round mb-0 btn btn-danger"
-                                data-bs-toggle="tooltip"
-                                data-bs-placement="top"
-                                title="Delete"
-                              >
-                                <i className="bi bi-trash" />
-                              </a>
-                              <a
-                                href="dashboard-post-edit.html"
-                                className="btn btn-primary btn-round mb-0"
-                                data-bs-toggle="tooltip"
-                                data-bs-placement="top"
-                                title="Edit"
-                              >
-                                <i className="bi bi-pencil-square" />
-                              </a>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <h6 className="mt-2 mt-md-0 mb-0 ">
-                              <a
-                                href="#"
-                                className="text-dark text-decoration-none dark:text-white"
-                              >
-                                How to become a better Django and React
-                                developer
-                              </a>
-                            </h6>
-                          </td>
-                          <td>
-                            <h6 className="mb-0">
-                              <a
-                                href="#"
-                                className="text-dark text-decoration-none dark:text-white"
-                              >
-                                201 Views
-                              </a>
-                            </h6>
-                          </td>
-                          <td>March 21, 2024.</td>
-                          <td>Technology</td>
-                          <td>
-                            <span className="badge bg-success bg-opacity-10 text-black mb-2">
-                              Live
-                            </span>
-                          </td>
-                          <td>
-                            <div className="d-flex gap-2">
-                              <a
-                                href="#"
-                                className="btn-round mb-0 btn btn-danger"
-                                data-bs-toggle="tooltip"
-                                data-bs-placement="top"
-                                title="Delete"
-                              >
-                                <i className="bi bi-trash" />
-                              </a>
-                              <a
-                                href="dashboard-post-edit.html"
-                                className="btn btn-primary btn-round mb-0"
-                                data-bs-toggle="tooltip"
-                                data-bs-placement="top"
-                                title="Edit"
-                              >
-                                <i className="bi bi-pencil-square" />
-                              </a>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <h6 className="mt-2 mt-md-0 mb-0 ">
-                              <a
-                                href="#"
-                                className="text-dark text-decoration-none dark:text-white"
-                              >
-                                How to become a better Django and React
-                                developer
-                              </a>
-                            </h6>
-                          </td>
-                          <td>
-                            <h6 className="mb-0">
-                              <a
-                                href="#"
-                                className="text-dark text-decoration-none dark:text-white"
-                              >
-                                201 Views
-                              </a>
-                            </h6>
-                          </td>
-                          <td>March 21, 2024.</td>
-                          <td>Technology</td>
-                          <td>
-                            <span className="badge bg-success bg-opacity-10 text-black mb-2">
-                              Live
-                            </span>
-                          </td>
-                          <td>
-                            <div className="d-flex gap-2">
-                              <a
-                                href="#"
-                                className="btn-round mb-0 btn btn-danger"
-                                data-bs-toggle="tooltip"
-                                data-bs-placement="top"
-                                title="Delete"
-                              >
-                                <i className="bi bi-trash" />
-                              </a>
-                              <a
-                                href="dashboard-post-edit.html"
-                                className="btn btn-primary btn-round mb-0"
-                                data-bs-toggle="tooltip"
-                                data-bs-placement="top"
-                                title="Edit"
-                              >
-                                <i className="bi bi-pencil-square" />
-                              </a>
-                            </div>
-                          </td>
-                        </tr>
+                      ))}
+
                       </tbody>
                     </table>
                   </div>
