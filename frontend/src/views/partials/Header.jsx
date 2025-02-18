@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { BiSearch, BiUserPlus, BiLogIn, BiMenu } from "react-icons/bi";
 import { FaUser, FaPlusCircle, FaBell, FaComment, FaGripLines } from "react-icons/fa";
+import { useAuthStore } from "../../store/auth";
 
 const Header = () => {
+  const [isLoggedIn, user] = useAuthStore((state) => [state.isLoggedIn, state.user]);
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -52,12 +54,27 @@ const Header = () => {
           </div>
 
           {/* Auth Buttons */}
+          {isLoggedIn() ? (
+
+          <>
+          <Link to="/dashboard/" className="btn btn-success flex items-center">
+            Dashboard <BiUserPlus className="ml-1" />
+          </Link>
+          <Link to="/logout/" className="btn btn-primary flex items-center">
+            Logout <BiLogIn className="ml-1" />
+          </Link>
+          </>
+          ) : (
+
+          <>
           <Link to="/register" className="btn btn-success flex items-center">
             Register <BiUserPlus className="ml-1" />
           </Link>
           <Link to="/login" className="btn btn-primary flex items-center">
             Login <BiLogIn className="ml-1" />
           </Link>
+          </>
+          )}
         </div>
 
         {/* Mobile Menu Button */}

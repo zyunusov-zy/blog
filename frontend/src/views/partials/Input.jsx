@@ -1,10 +1,12 @@
 import '../../index.css'
 import PropTypes from 'prop-types';
 
-const Input = ({ type, label, value, onChange }) => {
+const Input = ({ type, label, name, value, onChange }) => {
     return ( 
         <>
             <input
+              id={name}
+              name={name}
               type={type}
               value={value}
               onChange={onChange}
@@ -21,6 +23,7 @@ const Input = ({ type, label, value, onChange }) => {
 Input.propTypes = {
     type: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     value: PropTypes.string,
     onChange: PropTypes.func.isRequired,
 }

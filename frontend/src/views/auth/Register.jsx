@@ -2,13 +2,55 @@ import Header from "../partials/Header";
 import Footer from "../partials/Footer";
 import { useEffect, useState } from "react";
 import Input from "../partials/Input";
+import { useAuthStore } from "../../store/auth";
+import { register } from "../../utils/auth";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [fullName, setFullName] = useState("");
+  const [bioData, setBioData] = useState({
+    full_name: "",
+    email: "",
+    password: "",
+    password2: "",
+  });
   const [isLoaded, setIsLoaded] = useState(false);
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleBioDataChange = (e) => {
+    setBioData({
+      ...bioData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const resetBioData = () => {
+    setBioData({
+      full_name: "",
+      email: "",
+      password: "",
+      password2: "",
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    const { error } = await register(
+      bioData.full_name,
+      bioData.email,
+      bioData.password,
+      bioData.password2
+    );
+    if (error) {
+      alert(JSON.stringify(error));
+      resetBioData();
+    } else {
+      navigate("/");
+    }
+    setIsLoading(false);
+  };
 
   useEffect(() => {
     setIsLoaded(true);
@@ -31,37 +73,44 @@ function Register() {
             <h1 className="font-bold">SignUp to User Profile</h1>
           </div>
 
-          <form action="post" className="bg-gray-900 flex gap-4 flex-col">
+          <form
+            className="bg-gray-900 flex gap-4 flex-col"
+            onSubmit={handleSubmit}
+          >
             <div className={`relative ${isLoaded ? "animate-visible1" : ""}`}>
               <Input
                 type={"email"}
                 label={"Email"}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                name="email"
+                value={bioData.email}
+                onChange={handleBioDataChange}
               />
             </div>
-              <div className={`relative ${isLoaded ? "animate-visible1" : ""}`}>
-                <Input
-                  type={"text"}
-                  label={"Full Name"}
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                />
-              </div>
+            <div className={`relative ${isLoaded ? "animate-visible1" : ""}`}>
+              <Input
+                type={"text"}
+                label={"Full Name"}
+                name="full_name"
+                value={bioData.full_name}
+                onChange={handleBioDataChange}
+              />
+            </div>
             <div className={`relative ${isLoaded ? "animate-visible1" : ""}`}>
               <Input
                 type={"password"}
                 label={"Password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                name="password"
+                value={bioData.password}
+                onChange={handleBioDataChange}
               />
             </div>
             <div className={`relative ${isLoaded ? "animate-visible1" : ""}`}>
               <Input
                 type={"password"}
                 label={"Confirm Password"}
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                name="password2"
+                value={bioData.password2}
+                onChange={handleBioDataChange}
               />
             </div>
             <div className={` w-full ${isLoaded ? "animate-visible1" : ""}`}>
@@ -69,7 +118,17 @@ function Register() {
                 type="submit"
                 className="w-full py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
               >
-                Sign Up
+              {isLoading ? (
+                <>
+                  <span className="mr-2 ">Processing...</span>
+                  <i className="fas fa-spinner fa-spin" />
+                </>
+              ) : (
+                <>
+                  <span className="mr-2">Sign Up</span>
+                  <i className="fas fa-user-plus" />
+                </>
+              )}
               </button>
             </div>
           </form>
