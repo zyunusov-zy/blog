@@ -124,7 +124,7 @@ function Dashboard() {
                   <div className="space-y-3">
                     {posts?.slice(0, 3).map((post, index) => (
                       <>
-                        <div className="flex relative">
+                        <div className="flex relative" key={index}>
                           <img
                             className="w-24 h-24 rounded-lg object-cover"
                             src={post?.image}
@@ -177,7 +177,7 @@ function Dashboard() {
                   <div className="space-y-3">
                     {comments.slice(0, 6).map((comment, index) => (
                       <>
-                        <div className="flex items-center relative">
+                        <div className="flex items-center relative" key={index}>
                           {/* <img
                             className="w-16 h-16 rounded-full object-cover"
                             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVSPtLWfht2p015onFngljcoIuA9xc8h3RLA&usqp=CAU"
