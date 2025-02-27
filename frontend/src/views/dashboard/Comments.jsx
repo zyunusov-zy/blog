@@ -15,6 +15,7 @@ function Comments() {
   const user_id = useUserData()?.user_id;
 
   const fetchComments = async () => {
+    console.log(user_id)
     const response = await apiInstance.get(
       `author/dashboard/comment-list/${user_id}/`
     );
