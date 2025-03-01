@@ -4,12 +4,53 @@ import Header from "../partials/Header";
 import { Link } from "react-router-dom";
 import Input from "../partials/Input";
 import Footer from "../partials/Footer";
+import { useParams, useNavigate } from "react-router-dom";
+
+import apiInstance from "../../utils/axios";
+import { useAuthStore } from "../../store/auth";
+import { login, register } from "../../utils/auth";
 
 const Login = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+
+  const [bioData, setBioData] = useState({
+    email: "",
+    password: "",
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+  const navigate = useNavigate();
+
+  const handleBioData = (event) => {
+    setBioData({
+      ...bioData,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const resetForm = () => {
+    setBioData({
+      email: "",
+      password: "",
+    });
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    const { error } = await login(bioData.email, bioData.password);
+    if (error) {
+      alert(JSON.stringify(error));
+      resetForm();
+    } else {
+      navigate("/");
+    }
+
+    // Reset isLoading to false when the operation is complete
+    setIsLoading(false);
+  };
 
   useEffect(() => {
     setIsLoaded(true);
@@ -33,7 +74,7 @@ const Login = () => {
           >
             <h1 className="font-bold ">Login to User Profile</h1>
           </div>
-          <form action="post" className="bg-gray-900 flex gap-4 flex-col">
+          <form action="post" onSubmit={handleLogin} className="bg-gray-900 flex gap-4 flex-col">
             <div
               className={`relative ${
                 isExiting
@@ -44,10 +85,11 @@ const Login = () => {
               }`}
             >
               <Input
-                type={"text"}
+                type={"email"}
                 label={"Email"}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                name="email"
+                value={bioData.email}
+                onChange={handleBioData}
               />
             </div>
             <div
@@ -62,8 +104,9 @@ const Login = () => {
               <Input
                 type={"password"}
                 label={"Password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                name="password"
+                value={bioData.password}
+                onChange={handleBioData}
               />
             </div>
             <div

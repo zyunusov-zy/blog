@@ -1,8 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../partials/Header";
 import Footer from "../partials/Footer";
+import { Link } from "react-router-dom";
+import useUserData from "../../plugin/useUserData";
+import apiInstance from "../../utils/axios";
+import Moment from "../../plugin/Moment";
+import { MessageCircle, Heart, Bookmark } from "lucide-react";
+
 
 function Profile() {
+    const [profileData, setProfileData] = useState({
+        image: null,
+        full_name: "",
+        about: "",
+        bio: "",
+        country: "",
+    });
+    const user_id = useUserData()?.user_id;
+    const [imagePrev, setImagePrev] = useState("");
+
+    const handleFileChange = (event) => {
+
+    }
+
+    const fetchProfile = async () => {
+        try {
+            const res = await apiInstance.get(`user/profile/${user_id}/`);
+            setProfileData(res?.data);
+            console.log(res?.data);
+        } catch (error) {
+            console.error("Error fetching profile:", error);
+        }
+    };
+    
+    useEffect(() => {
+        fetchProfile();
+    }, [])
     return (
         <>
             <Header />
@@ -16,7 +49,7 @@ function Profile() {
                         <form className="space-y-4">
                             <div className="flex items-center gap-4 mb-6">
                                 <img
-                                    src="https://eduport.webestica.com/assets/images/avatar/09.jpg"
+                                    src={profileData?.image}
                                     className="avatar-xl rounded-full object-cover w-32 h-32"
                                     alt="avatar"
                                 />
@@ -44,6 +77,7 @@ function Profile() {
                                             className="form-control bg-gray-700 text-white border border-gray-600 p-3 rounded"
                                             placeholder="What's your full name?"
                                             required
+                                            value={profileData.full_name || ""}
                                         />
                                     </div>
 
@@ -55,6 +89,8 @@ function Profile() {
                                             className="form-control bg-gray-700 text-white border border-gray-600 p-3 rounded"
                                             placeholder="Write a catchy bio!"
                                             required
+                                            value={profileData.bio || ""}
+
                                         />
                                     </div>
 
@@ -65,6 +101,8 @@ function Profile() {
                                             placeholder="Tell us about yourself..."
                                             className="form-control bg-gray-700 text-white border border-gray-600 p-3 rounded"
                                             rows="4"
+                                            value={profileData.about || ""}
+
                                         ></textarea>
                                     </div>
 
@@ -76,6 +114,8 @@ function Profile() {
                                             className="form-control bg-gray-700 text-white border border-gray-600 p-3 rounded"
                                             placeholder="What country are you from?"
                                             required
+                                            value={profileData.country || ""}
+
                                         />
                                     </div>
 
