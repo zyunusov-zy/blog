@@ -89,7 +89,7 @@ function Index() {
                   </h4>
                   <ul className="mt-3 space-y-2 text-gray-400">
                     <li className="flex items-center gap-2">
-                      <i className="fas fa-user"></i> {post.profile.full_name}
+                      <i className="fas fa-user"></i> {post.profile?.full_name}
                     </li>
                     <li className="flex items-center gap-2">
                       <i className="fas fa-calendar"></i> {Moment(post.date)}

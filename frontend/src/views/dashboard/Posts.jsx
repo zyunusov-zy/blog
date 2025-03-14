@@ -140,15 +140,15 @@ function Posts() {
                           >
                             <i className="bi bi-trash" />
                           </a>
-                          <a
-                            href="dashboard-post-edit.html"
+                          <Link
+                            to={`/edit-post/${post?.id}`}
                             className="btn btn-primary btn-round mb-0"
                             data-bs-toggle="tooltip"
                             data-bs-placement="top"
                             title="Edit"
                           >
                             <i className="bi bi-pencil-square" />
-                          </a>
+                          </Link>
                         </div>
                       </td>
                     </tr>
