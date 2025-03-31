@@ -17,7 +17,7 @@
 ## Tech Stack
 - **Frontend:** React, TailwindCSS
 - **Backend:** Django, Django REST Framework (DRF)
-- **Database:** PostgreSQL
+- **Database:** SQLite
 - **Authentication:** JWT-based authentication
 
 ## Setup Instructions
